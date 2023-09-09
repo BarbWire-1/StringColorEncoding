@@ -128,7 +128,7 @@ textarea.placeholder =
 // }
 
 // init an istance
-let test = new ImageEncoder('testCanvas', 5, 20);
+let test = new ImageEncoder('testCanvas', 88, 20);
 test.encodeStringToImage(str)
 //test.decodeImage(test.canvas)
 

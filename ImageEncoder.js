@@ -57,17 +57,17 @@ export default class ImageEncoder {
 		let step = Math.ceil(255 / 128);
 		const r = step * charCode;
 		const g =
-			charCode % 3 === 1
+			charCode % 3 === 0
 				? step * charCode
-				: ((255 / 128) * (this.colorKey * charCode)) % 255;
+				: (step * 2 * this.colorKey * charCode ) % 255;
 		const b =
-			charCode % 3 === 2
+			charCode % 2 === 1
 				? step * charCode
-				: ((255 / 128) * (8 * this.colorKey * charCode)) % 255;
+				: (step * 18 * this.colorKey * charCode) % 255;
 		return `rgb(${r}, ${g}, ${b})`;
 	}
     /**
-     * get the charCode from r
+     * calc the charCode from r (currently)
      * @param {*} rgbColor 
      * @returns 
      */
@@ -82,7 +82,8 @@ export default class ImageEncoder {
      * Write the colorBlocks with generated colors to canvas
      * @param {*} str 
      */
-	encodeStringToImage(str) {
+    encodeStringToImage(str) {
+        //str = btoa(str);
         this.initializeCanvas(str);
 
 		// Canvas rows
@@ -131,7 +132,8 @@ export default class ImageEncoder {
 				const pixelIndex = (y * canvas.width + x) * 4;
 				const red = imageData[pixelIndex];
 				const charCode = (red * 128) / 255;
-				const char = String.fromCharCode(charCode);
+                let char = String.fromCharCode(charCode);
+                //char = atob(char);
 				chars.push(char);
 			}
 		}
