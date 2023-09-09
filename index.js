@@ -8,7 +8,7 @@ let str =
 	"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.. ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ß!§$%&/()=?°^,.-_:;#+'*'";
 
 //str = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ßA .,; --_`;
-str = `This is really a fun thingy! Only downside is that I'm not able to regulate a nicer color-distribution without loosing uniqueness of charCode-colorcode-relation!... AND iwant to get rid of those tailing whitespace.But tomorrow is another day... aaaand: I need to hardcode a color for return and some other charCodes`;
+//str = `This is really a fun thingy! Only downside is that I'm not able to regulate a nicer color-distribution without loosing uniqueness of charCode-colorcode-relation!... AND iwant to get rid of those tailing whitespace.But tomorrow is another day... aaaand: I need to hardcode a color for return and some other charCodes`;
 
 // crashed the implementation of colorKey for decoding :(
 
@@ -135,7 +135,7 @@ test.encodeStringToImage(str)
 
 // TODO add listeners for str, colorKey, pxSize
 //test.colorKey = 8
-test.encodeStringToImage(str)
+//test.encodeStringToImage(str)
 // test.decodeImage(test.canvas)
 
 //test.pxSize = 30
@@ -156,7 +156,6 @@ imageInput.addEventListener("change", (event) => {
 		reader.onload = (e) => {
 			const img = new Image();
 			img.src = e.target.result;
-            //document.body.append(img)
 			img.onload = () => {
 				test.decodeUploadedImage(img)
 			};
@@ -170,7 +169,7 @@ imageInput.addEventListener("change", (event) => {
 	}, 3000);
 });
 
-//encodeStringToImage(str);
+
 
 
 

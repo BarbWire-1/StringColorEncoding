@@ -25,6 +25,9 @@ body {
 
 	filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.7));
 }
+#testCanvas {
+    height: max(40vw, 400px);
+}
 #navigation {
 	position: relative;
 	display: flex;
@@ -84,6 +87,6 @@ button:hover {
 	/* interesting: only works on id */
 	width: fit-content;
 }
-link {
+a {
     font-size: 2em;
 }

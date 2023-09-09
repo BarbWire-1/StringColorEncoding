@@ -154,6 +154,8 @@ export default class ImageEncoder {
         const uploadedContext = uploaded.getContext("2d");
         uploadedContext.drawImage(img, 0, 0, img.width, img.height);
         const decodedText = this.decodeImage(uploaded);
+        this.context.clearRect(0,0,this.canvas.width, this.canvas.height )
+        this.context.drawImage(img, 0, 0, this.canvas.width, this.canvas.height )
         document.getElementById("output").innerText = decodedText;
     }
 
