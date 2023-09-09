@@ -35,24 +35,7 @@ export default class ImageEncoder {
 		this.#canvas.height = this.#canvasSize * this.pxSize;
 	}
     
-    /**
-     * get the color of pixel at coord
-     * @param {*} x 
-     * @param {*} y 
-     * @returns 
-     */
-    /*
-	getColorAt(x, y) {
-		const pixelData = this.context.getImageData(
-			x * this.pxSize,
-			y * this.pxSize,
-			this.pxSize,
-			this.pxSize
-		).data;
-		const [red, green, blue] = pixelData;
-		return `rgb(${red}, ${green}, ${blue})`;
-	}
-    */
+
     /**
      * create colorCodes from CharCode
      * @param {*} charCode 
@@ -71,19 +54,7 @@ export default class ImageEncoder {
 				: (step * 18 * this.colorKey * charCode) % 255;
 		return `rgb(${r}, ${g}, ${b})`;
 	}
-    /**
-     * calc the charCode from r (currently)
-     * @param {*} rgbColor 
-     * @returns 
-     */
-    /*
-	#decodeColor(rgbColor) {
-		const rgbValues = rgbColor.match(/\d+/g).map(Number);
-		const [r] = rgbValues;
-		const charCode = Math.floor((r * 128) / 255);
-		return charCode;
-	}
-    */
+    
     /**
      * Write the colorBlocks with generated colors to canvas
      * @param {*} str 
@@ -159,7 +130,7 @@ export default class ImageEncoder {
                     const blue = imageData[ pixelIndex + 2 ];
                     
                     if (green !== this.colorKey || blue !== this.pxSize) {
-                        alert("Please enter the correct keys!");
+                        alert("Please enter the correct keys to decrypt this image!");
                         return;
                     }
                 } else {
@@ -184,13 +155,17 @@ export default class ImageEncoder {
      * writes result to the textarea
      * @param {*} img uploaded image
      */
+    
+    //TODO only load the image when the keys are correct!
     decodeUploadedImage(img) {
         const uploaded = document.createElement("canvas");
          uploaded.width = img.width;
          uploaded.height = img.height;
         const uploadedContext = uploaded.getContext("2d");
+        
         uploadedContext.drawImage(img, 0, 0, img.width, img.height);
         const decodedText = this.decodeImage(uploaded);
+        
         this.#context.clearRect(0,0,this.#canvas.width, this.#canvas.height )
         this.#context.drawImage(img, 0, 0, this.#canvas.width, this.#canvas.height )
         document.getElementById("output").innerText = decodedText;
