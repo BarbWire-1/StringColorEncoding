@@ -1,9 +1,5 @@
 import ImageEncoder from "./ImageEncoder.js";
-
-
-
-
-
+import './UI.js';
 
 let str =
 	"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.. ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ß!§$%&/()=?°^,.-_:;#+'*'";
@@ -26,44 +22,16 @@ let str =
 
 
 
-// init an instance
-let test = new ImageEncoder('testCanvas', 16,20);
-test.encodeStringToImage(str)
+// init an instance with canvasId, colorKey, pixelSize
+let cryptical = new ImageEncoder("testCanvas", 93, 20);
+cryptical.encodeStringToImage(str);
+
+let decoded = cryptical.decodeImage(document.getElementById("testCanvas"));
+
+//console.log(decoded)
 
 
-
-
-//UPLOAD image - check to reduce on 1 px to directly decode 1: 1
-imageInput.addEventListener("change", (event) => {
-
-	const label = document.querySelector("label[for=imageInput]");
-	const file = event.target.files[0];
-	let fileName = "";
-
-
-	if (file) {
-		fileName = file.name;
-		const reader = new FileReader();
-
-		reader.onload = (e) => {
-			const img = new Image();
-			img.src = e.target.result;
-			img.onload = () => {
-				test.decodeUploadedImage(img)
-			};
-		};
-
-		reader.readAsDataURL(file);
-	}
-	label.innerText = fileName;
-	setTimeout(() => {
-		label.innerText = "Upload Encrypted Image";
-	}, 3000);
-});
-
-let decoded = test.decodeImage(document.getElementById('testCanvas'));
-
-console.log(decoded)
+export { cryptical }
 
 
 
