@@ -5,30 +5,34 @@ export default class ImageEncoder {
      * @param {*} colorKey changes relations in rgb - this should be in g
      * @param {*} pxSize changes size of colorBlocks - this should be in b of last px
      */
+    #canvas
+    #canvasSize
+    #context
+    #downloadLink
 	constructor(canvasId, colorKey, pxSize) {
-		this.canvas = document.getElementById(canvasId);
-		this.canvasSize = 0;
+		this.#canvas = document.getElementById(canvasId);
+		this.#canvasSize = 0;
 		this.colorKey = colorKey;
 		this.pxSize = pxSize;
-        this.context = this.canvas.getContext("2d");
+        this.#context = this.#canvas.getContext("2d");
         
         // DownloadLink
-        const imageDataUrl = this.canvas.toDataURL("image/png");
-        this.downloadLink = document.createElement("a");
-        this.downloadLink.href = imageDataUrl;
-        this.downloadLink.download = "encoded_image.png";
-        this.downloadLink.innerHTML = "Download Encoded Image";
-        this.canvas.after(this.downloadLink);
+        const imageDataUrl = this.#canvas.toDataURL("image/png");
+        this.#downloadLink = document.createElement("a");
+        this.#downloadLink.href = imageDataUrl;
+        this.#downloadLink.download = "encoded_image.png";
+        this.#downloadLink.innerHTML = "Download Encoded Image";
+        this.#canvas.after(this.#downloadLink);
     
 	}
     /**
      * Inits the canvas in the needed size and form
      * @param {*} str string base to create the canvas from in blocks
      */
-	initializeCanvas(str) {
-		this.canvasSize = Math.ceil(Math.sqrt(str.length));
-		this.canvas.width = this.canvasSize * this.pxSize;
-		this.canvas.height = this.canvasSize * this.pxSize;
+	#initializeCanvas(str) {
+		this.#canvasSize = Math.ceil(Math.sqrt(str.length));
+		this.#canvas.width = this.#canvasSize * this.pxSize;
+		this.#canvas.height = this.#canvasSize * this.pxSize;
 	}
     
     /**
@@ -37,6 +41,7 @@ export default class ImageEncoder {
      * @param {*} y 
      * @returns 
      */
+    /*
 	getColorAt(x, y) {
 		const pixelData = this.context.getImageData(
 			x * this.pxSize,
@@ -47,13 +52,13 @@ export default class ImageEncoder {
 		const [red, green, blue] = pixelData;
 		return `rgb(${red}, ${green}, ${blue})`;
 	}
-    
+    */
     /**
      * create colorCodes from CharCode
      * @param {*} charCode 
      * @returns 
      */
-	encodeColor(charCode) {
+	#encodeColor(charCode) {
 		let step = Math.ceil(255 / 128);
 		const r = step * charCode;
 		const g =
@@ -71,30 +76,31 @@ export default class ImageEncoder {
      * @param {*} rgbColor 
      * @returns 
      */
-	decodeColor(rgbColor) {
+    /*
+	#decodeColor(rgbColor) {
 		const rgbValues = rgbColor.match(/\d+/g).map(Number);
 		const [r] = rgbValues;
 		const charCode = Math.floor((r * 128) / 255);
 		return charCode;
 	}
-    
+    */
     /**
      * Write the colorBlocks with generated colors to canvas
      * @param {*} str 
      */
     encodeStringToImage(str) {
         //str = btoa(str);
-        this.initializeCanvas(str);
+        this.#initializeCanvas(str);
 
 		// Canvas rows
-		for (let y = 0; y < this.canvasSize; y++) {
+		for (let y = 0; y < this.#canvasSize; y++) {
 			// Canvas columns
-			for (let x = 0; x < this.canvasSize; x++) {
-				const i = y * this.canvasSize + x; // Get index based on row and column
+			for (let x = 0; x < this.#canvasSize; x++) {
+				const i = y * this.#canvasSize + x; // Get index based on row and column
 				if (i < str.length) {
 					const char = str[i];
 					const charCode = char.charCodeAt(0);
-                    let color = this.encodeColor(charCode);
+                    let color = this.#encodeColor(charCode);
                     
                     if (i === 0) {// save the keys in the first encoded char's g, b and soften r
                         let [ r, b, g ] = color;
@@ -106,8 +112,8 @@ export default class ImageEncoder {
                             //console.log(color)
                     }
                     //console.log(color)
-					this.context.fillStyle = color;
-					this.context.fillRect(
+					this.#context.fillStyle = color;
+					this.#context.fillRect(
 						x * this.pxSize,
 						y * this.pxSize,
 						this.pxSize,
@@ -119,8 +125,8 @@ export default class ImageEncoder {
 			}
         }
     // download the created image
-	const imageDataUrl = this.canvas.toDataURL("image/png");
-	this.downloadLink.href = imageDataUrl;
+	const imageDataUrl = this.#canvas.toDataURL("image/png");
+	this.#downloadLink.href = imageDataUrl;
 	
 	}
 
@@ -185,8 +191,8 @@ export default class ImageEncoder {
         const uploadedContext = uploaded.getContext("2d");
         uploadedContext.drawImage(img, 0, 0, img.width, img.height);
         const decodedText = this.decodeImage(uploaded);
-        this.context.clearRect(0,0,this.canvas.width, this.canvas.height )
-        this.context.drawImage(img, 0, 0, this.canvas.width, this.canvas.height )
+        this.#context.clearRect(0,0,this.#canvas.width, this.#canvas.height )
+        this.#context.drawImage(img, 0, 0, this.#canvas.width, this.#canvas.height )
         document.getElementById("output").innerText = decodedText;
     }
 

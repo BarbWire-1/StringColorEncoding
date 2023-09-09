@@ -83,9 +83,9 @@ imageInput.addEventListener("change", (event) => {
 	}, 3000);
 });
 
+let decoded = test.decodeImage(document.getElementById('testCanvas'));
 
-
-
+console.log(decoded)
 
 
 
