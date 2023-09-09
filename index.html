@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryting Strings to Color-Block-Image</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <canvas id="testCanvas" class="panel"></canvas>
+  <!-- <canvas id="characterCanvas" class="panel"></canvas>-->
+
+    <textarea id="output"></textarea>
+
+    <div id="navigation" class="panel">
+        <div id="keys">
+            <input id="color-key" type="number" placeholder="Color-Key(not yet)">
+            <input id="canvas-key" type="number" placeholder="Canvas-Key(not yet">
+
+        </div>
+        <button id="encrypt-button" class="btn panel">Encrypt Text</button>
+        <label id="pseudoButton" for="imageInput" class="btn panel">Upload & Decrypt Image</label>
+        <input type="file" id="imageInput" style="display:none;" accept="image/*">
+        <input type="" id="textInput" style="display:none;" accept="">
+        
+      
+
+</div>
+  
+    
+    <script type="module" src="index.js"></script>
+</body>
+</html>
