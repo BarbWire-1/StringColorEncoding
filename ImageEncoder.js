@@ -1,4 +1,10 @@
 export default class ImageEncoder {
+    /**
+     * 
+     * @param {*} canvasId add this to HTML where you need it
+     * @param {*} colorKey changes relations in rgb - this should be in g
+     * @param {*} pxSize changes size of colorBlocks - this should be in b of last px
+     */
 	constructor(canvasId, colorKey, pxSize) {
 		this.canvas = document.getElementById(canvasId);
 		this.canvasSize = 0;
@@ -6,26 +12,31 @@ export default class ImageEncoder {
 		this.pxSize = pxSize;
         this.context = this.canvas.getContext("2d");
         
-        // Create the download link once
+        // DownloadLink
         const imageDataUrl = this.canvas.toDataURL("image/png");
-
-		
-        
-            this.downloadLink = document.createElement("a");
-            this.downloadLink.href = imageDataUrl;
-            this.downloadLink.download = "encoded_image.png";
-            this.downloadLink.innerHTML = "Download Encoded Image";
-            this.canvas.after(this.downloadLink);
-       
+        this.downloadLink = document.createElement("a");
+        this.downloadLink.href = imageDataUrl;
+        this.downloadLink.download = "encoded_image.png";
+        this.downloadLink.innerHTML = "Download Encoded Image";
+        this.canvas.after(this.downloadLink);
     
 	}
-
+    /**
+     * Inits the canvas in the needed size and form
+     * @param {*} str string base to create the canvas from in blocks
+     */
 	initializeCanvas(str) {
 		this.canvasSize = Math.ceil(Math.sqrt(str.length));
 		this.canvas.width = this.canvasSize * this.pxSize;
 		this.canvas.height = this.canvasSize * this.pxSize;
 	}
-
+    
+    /**
+     * get the color of pixel at coord
+     * @param {*} x 
+     * @param {*} y 
+     * @returns 
+     */
 	getColorAt(x, y) {
 		const pixelData = this.context.getImageData(
 			x * this.pxSize,
@@ -36,7 +47,12 @@ export default class ImageEncoder {
 		const [red, green, blue] = pixelData;
 		return `rgb(${red}, ${green}, ${blue})`;
 	}
-
+    
+    /**
+     * create colorCodes from CharCode
+     * @param {*} charCode 
+     * @returns 
+     */
 	encodeColor(charCode) {
 		let step = Math.ceil(255 / 128);
 		const r = step * charCode;
@@ -50,14 +66,22 @@ export default class ImageEncoder {
 				: ((255 / 128) * (8 * this.colorKey * charCode)) % 255;
 		return `rgb(${r}, ${g}, ${b})`;
 	}
-
+    /**
+     * get the charCode from r
+     * @param {*} rgbColor 
+     * @returns 
+     */
 	decodeColor(rgbColor) {
 		const rgbValues = rgbColor.match(/\d+/g).map(Number);
 		const [r] = rgbValues;
 		const charCode = Math.floor((r * 128) / 255);
 		return charCode;
 	}
-
+    
+    /**
+     * Write the colorBlocks with generated colors to canvas
+     * @param {*} str 
+     */
 	encodeStringToImage(str) {
         this.initializeCanvas(str);
 
@@ -80,18 +104,17 @@ export default class ImageEncoder {
 				}
 			}
         }
+    // download the created image
 	const imageDataUrl = this.canvas.toDataURL("image/png");
-
-	//Create a link to download the image
 	this.downloadLink.href = imageDataUrl;
 	
-
-	//document.body.appendChild(downloadLink);
-	//this.canvas.after(downloadLink);
-
-
 	}
 
+    /**
+     * get charCode from the uploaded image if KEYS are correct
+     * @param {*} canvas of the uploaded image
+     * @returns the decoded string 
+     */
 	decodeImage(canvas) {
 		//console.log(canvas);
 		const ctx = canvas.getContext("2d");
@@ -114,19 +137,23 @@ export default class ImageEncoder {
 		}
 
         const stringFromImage = chars.join("");
-        console.log(stringFromImage)
+        //console.log(stringFromImage)
 		return stringFromImage;
     }
+    
+    /**
+     * creates a canvas for the uploaded image,
+     * decodes the pixels
+     * writes result to the textarea
+     * @param {*} img uploaded image
+     */
     decodeUploadedImage(img) {
-        const uploadedCanvas = document.createElement("canvas");
-        uploadedCanvas.width = img.width;
-        uploadedCanvas.height = img.height;
-        const uploadedContext = uploadedCanvas.getContext("2d");
+        const uploaded = document.createElement("canvas");
+         uploaded.width = img.width;
+         uploaded.height = img.height;
+        const uploadedContext = uploaded.getContext("2d");
         uploadedContext.drawImage(img, 0, 0, img.width, img.height);
-        //document.body.appendChild(uploadedCanvas)// correct Image
-        // Decode the uploaded image
-        const decodedText = this.decodeImage(uploadedCanvas); // Use 'this.decodeImage'
-        //console.log(decodedText) // wrong text
+        const decodedText = this.decodeImage(uploaded);
         document.getElementById("output").innerText = decodedText;
     }
 
