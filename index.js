@@ -27,7 +27,7 @@ let str =
 
 
 // init an instance
-let test = new ImageEncoder('testCanvas', 106,20);
+let test = new ImageEncoder('testCanvas', 16,20);
 test.encodeStringToImage(str)
 
 

@@ -9,6 +9,7 @@ export default class ImageEncoder {
     #canvasSize
     #context
     #downloadLink
+    #isValid
 	constructor(canvasId, colorKey, pxSize) {
 		this.#canvas = document.getElementById(canvasId);
 		this.#canvasSize = 0;
@@ -23,6 +24,7 @@ export default class ImageEncoder {
         this.#downloadLink.download = "encoded_image.png";
         this.#downloadLink.innerHTML = "Download Encoded Image";
         this.#canvas.after(this.#downloadLink);
+        this.#isValid = false;
     
 	}
     /**
@@ -128,14 +130,16 @@ export default class ImageEncoder {
                     const green = imageData[ pixelIndex + 1 ];
                     //console.log(green)
                     const blue = imageData[ pixelIndex + 2 ];
-                    
+                  
                     if (green !== this.colorKey || blue !== this.pxSize) {
-                        alert("Please enter the correct keys to decrypt this image!");
+                        this.#isValid = false;
                         return;
+                    
                     }
-                } else {
-                    red = imageData[pixelIndex];
                 }
+                    red = imageData[ pixelIndex ];
+                    this.#isValid = true;
+                
                 
 				const charCode = (red * 128) / 255;
                 let char = String.fromCharCode(charCode);
@@ -166,9 +170,13 @@ export default class ImageEncoder {
         uploadedContext.drawImage(img, 0, 0, img.width, img.height);
         const decodedText = this.decodeImage(uploaded);
         
-        this.#context.clearRect(0,0,this.#canvas.width, this.#canvas.height )
-        this.#context.drawImage(img, 0, 0, this.#canvas.width, this.#canvas.height )
-        document.getElementById("output").innerText = decodedText;
+        if (this.#isValid) {
+            console.log(this.#isValid)
+            this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
+       
+            this.#context.drawImage(img, 0, 0, this.#canvas.width, this.#canvas.height)
+        }
+        document.getElementById("output").innerText = decodedText || 'Please enter the correct keys!';
     }
 
     
