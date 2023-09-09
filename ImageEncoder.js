@@ -94,14 +94,27 @@ export default class ImageEncoder {
 				if (i < str.length) {
 					const char = str[i];
 					const charCode = char.charCodeAt(0);
-					const color = this.encodeColor(charCode);
+                    let color = this.encodeColor(charCode);
+                    
+                    if (i === 0) {// save the keys in the first encoded char's g, b and soften r
+                        let [ r, b, g ] = color;
+                        r = charCode * Math.ceil(50 / 128)
+                        b = this.pxSize;
+                        g = this.colorKey;
+                        
+                        color= `rgb(${r}, ${g}, ${b})`
+                            //console.log(color)
+                    }
+                    //console.log(color)
 					this.context.fillStyle = color;
 					this.context.fillRect(
 						x * this.pxSize,
 						y * this.pxSize,
 						this.pxSize,
 						this.pxSize
-					);
+                    );
+                    
+                        
 				}
 			}
         }
@@ -129,8 +142,24 @@ export default class ImageEncoder {
 
 		for (let y = 0; y < canvas.height; y += this.pxSize) {
 			for (let x = 0; x < canvas.width; x += this.pxSize) {
-				const pixelIndex = (y * canvas.width + x) * 4;
-				const red = imageData[pixelIndex];
+                const pixelIndex = (y * canvas.width + x) * 4;
+                let red = null;
+                
+                if (pixelIndex === 0) {// adjust r, check g,b for keys
+                    
+                    red = imageData[ pixelIndex ] * 2;
+                    const green = imageData[ pixelIndex + 1 ];
+                    //console.log(green)
+                    const blue = imageData[ pixelIndex + 2 ];
+                    
+                    if (green !== this.colorKey || blue !== this.pxSize) {
+                        alert("Please enter the correct keys!");
+                        return;
+                    }
+                } else {
+                    red = imageData[pixelIndex];
+                }
+                
 				const charCode = (red * 128) / 255;
                 let char = String.fromCharCode(charCode);
                 //char = atob(char);
