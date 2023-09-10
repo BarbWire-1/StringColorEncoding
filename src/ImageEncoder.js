@@ -13,13 +13,14 @@ export default class ImageEncoder {
 		this.#canvasSize = 0;
 		this.#colorKey = colorKey;
 		this.#pxSize = pxSize;
-		this.#context = this.#canvas.getContext("2d");
+        this.#context = this.#canvas.getContext("2d", { willReadFrequently: true });
+    
 
 		// DownloadLink - snecessary being defined here? Otherwise it messes with appending multiple links
-		const imageDataUrl = this.#canvas.toDataURL("image/png");
+		const imageDataUrl = this.#canvas.toDataURL("image/bmp");
 		this.#downloadLink = document.createElement("a");
 		this.#downloadLink.href = imageDataUrl;
-		this.#downloadLink.download = "encoded_image.png";
+		this.#downloadLink.download = "encoded_image.bmp";
 		this.#downloadLink.innerHTML = "Download Encoded Image";
 		this.#canvas.after(this.#downloadLink);
 		this.#isValid = false;
@@ -86,7 +87,7 @@ export default class ImageEncoder {
 			}
 		}
 		// download the created image
-		const imageDataUrl = this.#canvas.toDataURL("image/png");
+		const imageDataUrl = this.#canvas.toDataURL("image/bmp");
 		this.#downloadLink.href = imageDataUrl;
 	}
 
@@ -97,8 +98,8 @@ export default class ImageEncoder {
 	 */
 	decodeImage(canvas) {
 		//console.log(canvas);
-		const ctx = canvas.getContext("2d");
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+		const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height, { willReadFrequently: true }).data;
         //console.log(imageData)//-------------------------------------------------------------------------
        
 		let chars = [];
