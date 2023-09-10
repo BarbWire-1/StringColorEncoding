@@ -42,7 +42,7 @@ a:hover {
 	color: blue;
 }
 
-#output {
+#textField {
 	/* hm... break-word not really applied */
 	word-wrap: break-word;
 	overflow-wrap: break-word;

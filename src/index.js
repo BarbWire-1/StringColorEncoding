@@ -29,7 +29,8 @@ cryptical.encodeStringToImage(str);
 let decoded = cryptical.decodeImage(document.getElementById("testCanvas"));
 
 //console.log(decoded)
-
+cryptical.str = 'blahblahblah'
+console.log(cryptical.str)
 
 export { cryptical }
 

@@ -18,7 +18,9 @@ imageInput.addEventListener("change", (event) => {
 			const img = new Image();
 			img.src = e.target.result;
 			img.onload = () => {
-				cryptical.decodeUploadedImage(img)
+                
+                document.getElementById("textField").innerText =
+			        cryptical.decodeUploadedImage(img);
 			};
 		};
 
