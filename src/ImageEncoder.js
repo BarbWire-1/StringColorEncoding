@@ -107,12 +107,10 @@ export default class ImageEncoder {
 				let red = null;
 
 				if (pixelIndex === 0) {
-					// adjust r, check g,b for keys
+					// reverse r, check g,b for keys
 
 					red = (imageData[pixelIndex] / 128) * 255;
-					//console.log(red)//76 (?????)
 					const green = imageData[pixelIndex + 1];
-					//console.log(green)
 					const blue = imageData[pixelIndex + 2];
 
 					if (green !== this.#colorKey || blue !== this.#pxSize) {
@@ -159,7 +157,8 @@ export default class ImageEncoder {
 			//console.log(this.#isValid)
 			this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
 
-			this.#context.drawImage(img, 0, 0, this.#canvas.width, this.#canvas.height);
+            this.#context.drawImage(img, 0, 0, this.#canvas.width, this.#canvas.height);
+            
 		}
         return decodedText;
     }
