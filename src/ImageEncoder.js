@@ -43,7 +43,7 @@ export default class ImageEncoder {
 		let step = Math.ceil(255 / 128);
 		const r = step * charCode; // fix relation!;
 		const g = (step * Math.random(2) * this.#colorKey * charCode) % 255;
-		const b = (step * Math.random(18) * this.#colorKey * charCode) % 255;
+        const b = (step * Math.random(18) * this.#colorKey * charCode) % 255;
 		return `rgb(${r}, ${g}, ${b})`;
 	}
 
@@ -98,9 +98,12 @@ export default class ImageEncoder {
 	decodeImage(canvas) {
 		//console.log(canvas);
 		const ctx = canvas.getContext("2d");
-		const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        //console.log(imageData)-------------------------------------------------------------------------
+       
 		let chars = [];
-
+        
+        
 		for (let y = 0; y < canvas.height; y += this.#pxSize) {
 			for (let x = 0; x < canvas.width; x += this.#pxSize) {
 				const pixelIndex = (y * canvas.width + x) * 4;
@@ -108,13 +111,13 @@ export default class ImageEncoder {
 
 				if (pixelIndex === 0) {
 					// reverse r, check g,b for keys
+                    red = (imageData[ pixelIndex ] / 128) * 255;
 
-					red = (imageData[pixelIndex] / 128) * 255;
-					const green = imageData[pixelIndex + 1];
-					const blue = imageData[pixelIndex + 2];
+                    const green = +imageData[ pixelIndex + 1 ];
+                    const blue = +imageData[ pixelIndex + 2 ];
 
 					if (green !== this.#colorKey || blue !== this.#pxSize) {
-						this.#isValid = false;
+                        this.#isValid = false;
 						return;
 					}
 				} else {
@@ -130,7 +133,6 @@ export default class ImageEncoder {
 		}
 
 		const stringFromImage = chars.join("");
-		//console.log(stringFromImage)
 		return stringFromImage;
 	}
 
@@ -141,53 +143,54 @@ export default class ImageEncoder {
 	 * @param {*} img uploaded image
 	 */
 
-	//TODO only load the image when the keys are correct!
-	decodeUploadedImage(img) {
+
+    decodeUploadedImage(img) {
+        let decodedText = null;
+        
 		const uploaded = document.createElement("canvas");
 		uploaded.width = img.width;
 		uploaded.height = img.height;
 		const uploadedContext = uploaded.getContext("2d");
-
+        //console.log(this.#isValid)
 		uploadedContext.drawImage(img, 0, 0, img.width, img.height);
-        const decodedText = this.decodeImage(uploaded)
-            ||
-			"Please enter the correct keys! - (NOT YET IMPLEMENTED IN UI!)";;
-
+        decodedText = this.decodeImage(uploaded) || "Please enter the correct keys to decode this image and try uploading it again!";
+        // only draw if key is valid to not enable encoding (?) - was a bug earlier test NOW
+        if (!this.#isValid) return decodedText;
 		if (this.#isValid) {
-			//console.log(this.#isValid)
+		
 			this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
 
             this.#context.drawImage(img, 0, 0, this.#canvas.width, this.#canvas.height);
-            
-		}
+            decodedText = this.decodeImage(uploaded)
+        }
+       //console.log({decodedText})
         return decodedText;
     }
     
-    // Getter and Setter for str
+    // Getters/Setters
     get str() {
-    return this.#str;
-  }
+        return this.#str;
+    }
 
-  set str(newValue) {
-      this.#str = newValue;
-      this.encodeStringToImage(newValue) 
-  }
+    set str(newValue) {
+        this.#str = newValue;
+        this.encodeStringToImage(newValue) 
+    }
 
-  // Getter and Setter for colorKey
-  get colorKey() {
-    return this.#colorKey;
-  }
+    get colorKey() {
+        return this.#colorKey;
+    }
 
-  set colorKey(newValue) {
-    this.#colorKey = newValue;
-  }
+    set colorKey(newValue) {
+        this.#colorKey = newValue;
+    }
 
-  // Getter and Setter for pxSize
-  get pxSize() {
-    return this.#pxSize;
-  }
+    
+    get pxSize() {
+        return this.#pxSize;
+    }
 
-  set pxSize(newValue) {
-    this.#pxSize = newValue;
-  }
+    set pxSize(newValue) {
+        this.#pxSize = newValue;
+    }
 }

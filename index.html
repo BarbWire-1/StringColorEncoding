@@ -14,15 +14,16 @@
 
 <div id="navigation" class="panel">
     
-    <textarea id="textField" placeholder="Input for text and keys not yet implement, but testing in JS..."></textarea>
+    <textarea id="textField" data-instance="cryptical" placeholder="Input the text you want to encrypt..."></textarea>
 	<div id="keys">
-		<input id="color-key" type="number" placeholder="Color-Key">
-		<input id="canvas-key" type="number" placeholder="Canvas-Key">
+		<input id="color-key" type="number" placeholder="Color-Key" data-instance="cryptical">
+		<input id="canvas-key" type="number" placeholder="Canvas-Key" data-instance="cryptical">
 
 	</div>
-	<button id="encrypt-button" class="btn panel">Encrypt Text</button>
-	<label id="pseudoButton" for="imageInput" class="btn panel">Upload & Decrypt Image</label>
-	<input type="file" id="imageInput" style="display:none;" accept="image/*">
+	<button id="encrypt-button" class="btn panel" data-instance="cryptical">Encrypt Text</button>
+	<label id="pseudoButton" for="imageInput" class="btn panel" data-instance="cryptical">Upload & Decrypt Image</label>
+	<input type="file" id="imageInput" style="display:none;" accept="image/*"
+    data-instance="cryptical">
 	<input type="" id="textInput" style="display:none;" accept="">
 
 </div>

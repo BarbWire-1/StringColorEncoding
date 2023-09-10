@@ -1,5 +1,5 @@
 import ImageEncoder from "./ImageEncoder.js";
-import './UI.js';
+import "./UI.js";
 
 let str =
 	"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.. ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ß!§$%&/()=?°^,.-_:;#+'*'";
@@ -26,14 +26,6 @@ let str =
 let cryptical = new ImageEncoder("testCanvas", 93, 20);
 cryptical.encodeStringToImage(str);
 
-let decoded = cryptical.decodeImage(document.getElementById("testCanvas"));
-
-console.log({ decoded })
-cryptical.str = 'blahblahblah'
-console.log(cryptical.str)
-
-decoded = cryptical.decodeImage(document.getElementById("testCanvas"));
-console.log({ decoded })
 export { cryptical }
 
 
