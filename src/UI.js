@@ -32,6 +32,7 @@ function handleButtonClick(event) {
             const label = document.querySelector("label[for=imageInput]");
             const file = imageInput.files[0];
             let fileName = "";
+           
             //console.log('clicked uploadButton')// ok
             if (file) {
                 fileName = file.name;
@@ -39,18 +40,13 @@ function handleButtonClick(event) {
 
                 reader.onload = (e) => {
                     const img = new Image();
-                    try {
+                    
                         img.src = e.target.result;
                         img.onload = () => {
-                            textField.innerText = cryptical.decodeUploadedImage(img)
+                            textField.innerText = cryptical.decodeUploadedImage(img) || "Please enter the correct credentials to load and encrypt the image."
+                            //console.log(cryptical.decodeUploadedImage(img))
+                        };
                         
-                        };
-                        img.onerror = (error) => {
-                            console.error("Image load error:", error);
-                        };
-                        } catch (error) {
-                            console.error("Error loading image:", error);
-                        }
                 };
 
                 reader.readAsDataURL(file);

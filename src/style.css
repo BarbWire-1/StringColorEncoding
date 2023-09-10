@@ -22,8 +22,14 @@ body {
 	background: rgba(255, 255, 255, 0.4);
 	border: 1px solid white;
 	border-radius: 10px;
+    align-items: center;
 
 	filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.7));
+}
+.btn {
+   width: 300px;
+   height: 60px;
+    
 }
 #testCanvas {
     height: max(40vw, 400px);
@@ -53,10 +59,11 @@ a:hover {
 
 	margin: 20px;
 }
-#keys {
+.keys {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+    width: 100%;
 }
 input[type="number"] {
 	width: 40%;
@@ -82,11 +89,7 @@ button:hover {
 	background-color: #eee;
 }
 
-#pseudoButton,
-#encrypt-button {
-	/* interesting: only works on id */
-	width: fit-content;
-}
+
 a {
     font-size: 2em;
 }

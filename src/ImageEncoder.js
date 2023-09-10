@@ -99,7 +99,7 @@ export default class ImageEncoder {
 		//console.log(canvas);
 		const ctx = canvas.getContext("2d");
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-        //console.log(imageData)-------------------------------------------------------------------------
+        //console.log(imageData)//-------------------------------------------------------------------------
        
 		let chars = [];
         
@@ -118,7 +118,7 @@ export default class ImageEncoder {
 
 					if (green !== this.#colorKey || blue !== this.#pxSize) {
                         this.#isValid = false;
-						return;
+					    return;
 					}
 				} else {
 					red = imageData[pixelIndex];
@@ -131,8 +131,9 @@ export default class ImageEncoder {
 				chars.push(char);
 			}
 		}
-
-		const stringFromImage = chars.join("");
+        //console.log(this.#isValid)
+        const stringFromImage = chars.join("");
+        //console.log(stringFromImage)
 		return stringFromImage;
 	}
 
@@ -155,7 +156,8 @@ export default class ImageEncoder {
 		uploadedContext.drawImage(img, 0, 0, img.width, img.height);
         decodedText = this.decodeImage(uploaded) || "Please enter the correct keys to decode this image and try uploading it again!";
         // only draw if key is valid to not enable encoding (?) - was a bug earlier test NOW
-        if (!this.#isValid) return decodedText;
+        //if (!this.#isValid) return decodedText;
+        //console.log(decodedText)
 		if (this.#isValid) {
 		
 			this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
@@ -163,7 +165,7 @@ export default class ImageEncoder {
             this.#context.drawImage(img, 0, 0, this.#canvas.width, this.#canvas.height);
             decodedText = this.decodeImage(uploaded)
         }
-       //console.log({decodedText})
+        document.getElementById('textField').value = decodedText; // this is soooo ugly!!!! need to find another way
         return decodedText;
     }
     
