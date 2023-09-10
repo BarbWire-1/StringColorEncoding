@@ -20,7 +20,7 @@
 
   As it's a little standalone just play with it. Open a running app on netlify by clicking this button:
   
-  [![Netlify Status](https://api.netlify.com/api/v1/badges/fdefa180-9791-4d4f-8fc1-1bb9b065e75a/deploy-status)](https://css-color-palette-generator.netlify.app/)
+  [![Netlify Status](https://api.netlify.com/api/v1/badges/fdefa180-9791-4d4f-8fc1-1bb9b065e75a/deploy-status)](https://string-color-encoding.netlify.app/)
 
   ## Usage
 
