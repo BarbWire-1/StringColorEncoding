@@ -1,4 +1,4 @@
-import ImageEncoder from "./ImageEncoder.js";
+
 import { cryptical } from "./index.js";
 
 (function () {
@@ -43,8 +43,7 @@ function handleButtonClick(event) {
                     
                         img.src = e.target.result;
                         img.onload = () => {
-                            textField.innerText = cryptical.decodeUploadedImage(img) || "Please enter the correct credentials to load and encrypt the image."
-                            //console.log(cryptical.decodeUploadedImage(img))
+                            textField.innerText = cryptical.decodeUploadedImage(img)
                         };
                         
                 };
