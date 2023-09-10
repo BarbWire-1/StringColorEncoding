@@ -3,13 +3,14 @@
 
   ## Description
 
-  This is a project to encode strings to colorCodes represented in colorBlocks, the result can be downloaded as '.bmp - and inserting the correct credentials be decoded to a string again.
+  This is a project to encode strings to colorCodes represented in colorBlocks, the result can be downloaded as *.bmp - and inserting the correct credentials be decoded to a string again.
+  
+![color-palette image](StringColorScreenshot.png)
 
   ## Table of Contents
 
   * [Installation](#Installation)
   * [Usage](#Usage)
-  
   * [License](#license)
   * [Questions](#Questions)
 
@@ -17,7 +18,9 @@
 
   ## Installation
 
-  It is more a play-thingy
+  As it's a little standalone just play with it. Open a running app on netlify by clicking this button:
+  
+  [![Netlify Status](https://api.netlify.com/api/v1/badges/fdefa180-9791-4d4f-8fc1-1bb9b065e75a/deploy-status)](https://css-color-palette-generator.netlify.app/)
 
   ## Usage
 
